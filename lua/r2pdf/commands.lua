@@ -1,0 +1,1 @@
+print("DEBUG: commands.lua")
