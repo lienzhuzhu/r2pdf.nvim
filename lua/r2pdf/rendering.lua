@@ -5,13 +5,11 @@
 
 local render_pdf = function ()
     local file = vim.fn.expand("%:p")
-    print("INFO: Rendering PDF from " .. file)
     local cmd = "Rscript -e \"rmarkdown::render('" .. file .. "')\""
     local result = vim.fn.system(cmd)
     if vim.v.shell_error ~= 0 then
         print("Error: Failed to render " .. file)
     end
-    print("INFO: Rendered PDF from" .. file)
 end
 
 return {
