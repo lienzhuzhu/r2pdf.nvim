@@ -7,6 +7,7 @@ local internal_setup = require("r2pdf.setup")
 
 local function setup(opts)
     internal_setup.update_config(opts)
+    require("r2pdf.commands")
 end
 
 return {

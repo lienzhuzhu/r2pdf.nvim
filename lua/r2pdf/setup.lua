@@ -10,7 +10,6 @@ local _config = {
 
 
 local _update_config = function (opts)
-    print("DEBUG: _setup() was called")
     ---[[
     _config = vim.tbl_deep_extend("force", _config, opts or {})
     --]]
