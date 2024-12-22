@@ -8,7 +8,7 @@ local render_pdf = function ()
     local cmd = "Rscript -e \"rmarkdown::render('" .. file .. "')\""
     local result = vim.fn.system(cmd)
     if vim.v.shell_error ~= 0 then
-        print("Error: Failed to render " .. file)
+        vim.notify("Error: Failed to render " .. file, vim.log.levels.ERROR)
     end
 end
 
