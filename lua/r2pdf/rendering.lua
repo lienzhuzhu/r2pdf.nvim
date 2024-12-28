@@ -9,6 +9,7 @@ local render_pdf = function ()
     local result = vim.fn.system(cmd)
     if vim.v.shell_error ~= 0 then
         vim.notify("Error: Failed to render " .. file, vim.log.levels.ERROR)
+        vim.notify(result, vim.log.levels.ERROR)
     end
 end
 
