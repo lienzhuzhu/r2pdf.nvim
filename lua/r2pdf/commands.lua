@@ -40,6 +40,7 @@ local subcommand_tbl = {
 }
 
 
+-- Run the (sub)command
 ---@param opts table :h lua-guide-commands-create
 local function my_cmd(opts)
     local fargs = opts.fargs
@@ -56,6 +57,7 @@ local function my_cmd(opts)
 end
 
 
+-- Register `my_cmd` to be invoked by user command 
 vim.api.nvim_create_user_command("R2PDF", my_cmd, {
     nargs = "+",
     desc = "R2PDF user command with subcommand parsing",
@@ -81,4 +83,22 @@ vim.api.nvim_create_user_command("R2PDF", my_cmd, {
         end
     end,
     bang = true, -- If you want to support ! modifiers
+})
+
+
+
+-- R2PDF render autocommand
+local timer = nil
+vim.api.nvim_create_autocmd("BufWritePost", {
+  pattern = "*.Rmd",
+  --pattern = { "rmd", "markdown" },
+  callback = function()
+    if timer then
+      timer:stop()
+    end
+    timer = vim.loop.new_timer()
+    timer:start(100, 0, vim.schedule_wrap(function()
+        vim.cmd("R2PDF render")
+    end))
+  end,
 })

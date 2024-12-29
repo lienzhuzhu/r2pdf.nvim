@@ -11,6 +11,8 @@ local render_pdf = function()
         on_exit = function(_, code)
             if code == 0 then
                 vim.notify("Rendering complete: " .. file, vim.log.levels.INFO)
+                local pdf = vim.fn.expand("%:r") .. ".pdf"
+                vim.fn.jobstart("sioyek " .. pdf .. " &") --TODO: replace with opts.pdf_reader
             else
                 vim.notify("Rendering failed: " .. file, vim.log.levels.ERROR)
             end
