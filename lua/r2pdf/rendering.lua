@@ -3,14 +3,19 @@
 -- Description: Logic for rendering PDFs
 
 
-local render_pdf = function ()
+local render_pdf = function()
     local file = vim.fn.expand("%:p")
     local cmd = "Rscript -e \"rmarkdown::render('" .. file .. "')\""
-    local result = vim.fn.system(cmd)
-    if vim.v.shell_error ~= 0 then
-        vim.notify("Error: Failed to render " .. file, vim.log.levels.ERROR)
-        vim.notify(result, vim.log.levels.ERROR)
-    end
+
+    vim.fn.jobstart(cmd, {
+        on_exit = function(_, code)
+            if code == 0 then
+                vim.notify("Rendering complete: " .. file, vim.log.levels.INFO)
+            else
+                vim.notify("Rendering failed: " .. file, vim.log.levels.ERROR)
+            end
+        end,
+    })
 end
 
 return {
