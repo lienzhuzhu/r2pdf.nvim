@@ -10,35 +10,13 @@
 
 ---@type table<string, R2PDFsubcommand>
 local subcommand_tbl = {
-    --[[ Example from best practices guideline. https://github.com/nvim-neorocks/nvim-best-practices
-    install = {
-        impl = function(args, opts)
-            -- Implementation
-            print(opts)
-            print(args)
-        end,
-        complete = function(subcmd_arg_lead)
-            -- Simplified example
-            local install_args = {
-                "neorg",
-                "rest.nvim",
-                "rustaceanvim",
-            }
-            return vim.iter(install_args)
-                :filter(function(install_arg)
-                    -- If the user has typed `:R2PDF install ne`,
-                    -- this will match 'neorg'
-                    return install_arg:find(subcmd_arg_lead) ~= nil
-                end)
-                :totable()
-        end,
-    },
-    --]]
     render = {
         impl = require("r2pdf.rendering").render_pdf,
     },
+    hot = {
+        impl = require("r2pdf.setup").toggle_live,
+    },
 }
-
 
 -- Run the (sub)command
 ---@param opts table :h lua-guide-commands-create
@@ -84,7 +62,6 @@ vim.api.nvim_create_user_command("R2PDF", my_cmd, {
     end,
     bang = true, -- If you want to support ! modifiers
 })
-
 
 
 -- R2PDF render autocommand

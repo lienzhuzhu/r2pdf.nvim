@@ -5,14 +5,14 @@
 
 local _config = {
     output_type = "pdf_document",
-    pdf_reader = "sioyek"
+    pdf_reader = "sioyek",
+    live_render = false,
+    live_preview = false,
 }
 
 
 local _update_config = function (opts)
-    ---[[
     _config = vim.tbl_deep_extend("force", _config, opts or {})
-    --]]
 end
 
 local _get_config = function ()
@@ -25,8 +25,14 @@ local _print_config = function()
     end
 end
 
+local _toggle_live = function ()
+    _config.live_render = not _config.live_render
+    _config.live_preview = not _config.live_preview
+end
+
 return {
     update_config = _update_config,
     get_config = _get_config,
     print_config = _print_config,
+    toggle_live = _toggle_live,
 }
