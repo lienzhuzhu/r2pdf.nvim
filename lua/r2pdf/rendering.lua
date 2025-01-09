@@ -25,8 +25,6 @@ local _render_pdf = function()
                 end
             end,
         })
-    else
-        vim.notify("R2PDF Reminder: Live rendering is disabled", vim.log.levels.INFO)
     end
 
 end
